@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('active')->default(true); // si el usuario esta activo o inactivo
             $table->rememberToken();
             $table->timestamps();
         });
