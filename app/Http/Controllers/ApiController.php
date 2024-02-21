@@ -21,23 +21,40 @@ class ApiController extends Controller
         return response()->json($users);
     }
 
-    /*
-    public function getuser(Request $request)
-    {   // devuelve el listado completo de usuarios
-        $user = User::whereEmail($request->email);
-        //$user = User::where(['email' => $request->email])->get()->first;
-        $user
-        // los devuelve en json
-        return response()->json($user);
-    }
-*/
+    /*// modo depurado de login
+    public function user(Request $request)
+    {
+        // devuelve un usuario
+        $response = ["status" =>0,"msg"=>""];
+        $data = json_decode(($request->getContent()));
+        $user = User::where('email',$data->email)->first();
 
-    public function validateUser(Request $request)
+        // generar token de acceso con Sanctum
+
+        if($user) {
+            if (Hash::check($data->password, $user->password)) {
+                // creando token de autenticacion de usuario, se le puede dar permisos tambien (admin...)
+                $token = $user ->createToken("sample");
+                $response["status"] = 1;
+                $response["msg"] = $token->plainTextToken;
+            } else {
+                $response["msg"] = "Credenciales incorrectas";
+            }
+        }else {
+            $response["msg"] = "Usuario no encontrado";
+
+        }
+        // los devuelve en json
+        return response()->json($response);
+    }*/
+
+
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Autenticación exitosa, redirige donde necesites.
+            // TODO: revisar
             return response()->json(Auth::user());
         }
         else {
@@ -63,9 +80,4 @@ class ApiController extends Controller
     }
 
 
-
-    public function login(Request $request)
-    {
-
-    }
 }

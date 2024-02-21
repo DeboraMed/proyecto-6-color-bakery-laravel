@@ -17,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 /*ruta que ya te viene generada*/
-/*
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});*/
+});
 
-Route::get('/users',[ApiController::class, 'users']); //para obtener una lista de usuarios
-Route::get('/validateUser',[ApiController::class, 'validateUser']); //para obtener una lista de usuarios
-Route::post('/user/registry',[ApiController::class, 'registry']); //para obtener una lista de usuarios
-Route::post('/login',[ApiController::class, 'login']); //para obtener el token que permitira acceder
+// devuelve todos los usuarios
+Route::get('/users',[ApiController::class, 'users']);
+// devuelve un usuario
+Route::get('/user',[ApiController::class, 'user']);
+// post de login
+Route::post('/user/login',[ApiController::class, 'login']);
+// registra un usuario
+Route::post('/user/registry',[ApiController::class, 'registry']);
+
