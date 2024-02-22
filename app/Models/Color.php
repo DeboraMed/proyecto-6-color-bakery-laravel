@@ -4,9 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-// tutorial creacion modelo https://www.youtube.com/watch?v=ZPsjGNPGV8c&t=1s
 class Color extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Favorite::class);
+    }
+
+    public function palettes(): BelongsToMany
+    {
+        return $this->belongsToMany(Palette::class);
+    }
 }
