@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('palette_color', function (Blueprint $table) {
+        Schema::create('color_palette', function (Blueprint $table) {
             $table->id();
             $table->integer('palette_id');
             $table->integer('color_id');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('palette_color');
+        Schema::dropIfExists('color_palette');
     }
 };
