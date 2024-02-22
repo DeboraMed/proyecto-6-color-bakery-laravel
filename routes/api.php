@@ -18,16 +18,26 @@ use Illuminate\Support\Facades\Route;
 
 /*ruta que ya te viene generada*/
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// === AUTH ===
+
+// Crea un nuevo registro de usuario
+Route::post('/user/registry',[ApiController::class, 'registry']);
+
+// Login: Requiere 'email' y 'password'
+Route::post('/user/login',[ApiController::class, 'login']);
+
+// Devuelve el usuario activo dado un token
+Route::middleware('auth:sanctum')->get('/user/current',[ApiController::class, 'currentUser']);
+
+// Devuelve el usuario activo dado un token
+Route::middleware('auth:sanctum')->get('/user/logout',[ApiController::class, 'logout']);
+
+
+
+// === CRUD DE USUARIO ===
 
 // devuelve todos los usuarios
 Route::get('/users',[ApiController::class, 'users']);
+
 // devuelve un usuario
 Route::get('/user',[ApiController::class, 'user']);
-// post de login
-Route::post('/user/login',[ApiController::class, 'login']);
-// registra un usuario
-Route::post('/user/registry',[ApiController::class, 'registry']);
-

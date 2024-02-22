@@ -21,45 +21,28 @@ class ApiController extends Controller
         return response()->json($users);
     }
 
-    /*// modo depurado de login
-    public function user(Request $request)
-    {
-        // devuelve un usuario
-        $response = ["status" =>0,"msg"=>""];
-        $data = json_decode(($request->getContent()));
-        $user = User::where('email',$data->email)->first();
-
-        // generar token de acceso con Sanctum
-
-        if($user) {
-            if (Hash::check($data->password, $user->password)) {
-                // creando token de autenticacion de usuario, se le puede dar permisos tambien (admin...)
-                $token = $user ->createToken("sample");
-                $response["status"] = 1;
-                $response["msg"] = $token->plainTextToken;
-            } else {
-                $response["msg"] = "Credenciales incorrectas";
-            }
-        }else {
-            $response["msg"] = "Usuario no encontrado";
-
-        }
-        // los devuelve en json
-        return response()->json($response);
-    }*/
-
-
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // TODO: revisar
-            return response()->json(Auth::user());
-        }
-        else {
+            $user = Auth::user();
+            $token = $user->createToken('my_token');
+            return ['token' => $token->plainTextToken];
+        } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+    }
+
+    public function currentUser(Request $request)
+    {
+        return $request->user();
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
     public function registry(Request $request)
@@ -78,6 +61,4 @@ class ApiController extends Controller
 
         return response()->json($user);
     }
-
-
 }
