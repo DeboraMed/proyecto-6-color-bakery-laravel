@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ColorController;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
@@ -41,3 +42,10 @@ Route::get('/users',[ApiController::class, 'users']);
 
 // devuelve un usuario
 Route::get('/user',[ApiController::class, 'user']);
+
+
+// === CRUD DE COLORES (TODO: Incluir validacion por token) ===
+
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
+   Route::apiResource('colors',ColorController::class);
+});
