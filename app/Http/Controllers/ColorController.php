@@ -37,7 +37,7 @@ class ColorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Projects $projects)
+    public function show(Color $color)
     {
         //
     }
@@ -45,7 +45,7 @@ class ColorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Projects $projects)
+    public function edit(Color $color)
     {
         //
     }
@@ -53,7 +53,7 @@ class ColorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Projects $projects)
+    public function update(Request $request, Color $color)
     {
         //
     }
@@ -61,7 +61,7 @@ class ColorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projects $projects)
+    public function destroy(Color $color)
     {
         //
     }

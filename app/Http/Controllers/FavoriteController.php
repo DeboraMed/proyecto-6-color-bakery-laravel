@@ -17,7 +17,9 @@ class FavoriteController extends Controller
     {
         //
         $user = auth()->user();
-        return response()->json(['favorites' => $user->favorites()->get()], 200);
+        $favorites = $user->favorites()->with('color')->get();
+
+        return response()->json(['favorites' => $favorites], 200);
     }
 
     /**
@@ -39,7 +41,7 @@ class FavoriteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Projects $projects)
+    public function show(Favorite $favorite)
     {
         //
     }
@@ -47,7 +49,7 @@ class FavoriteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Projects $projects)
+    public function edit(Favorite $favorite)
     {
         //
     }
@@ -55,7 +57,7 @@ class FavoriteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Projects $projects)
+    public function update(Request $request, Favorite $favorite)
     {
         //
     }
@@ -63,7 +65,7 @@ class FavoriteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projects $projects)
+    public function destroy(Favorite $favorite)
     {
         //
     }
