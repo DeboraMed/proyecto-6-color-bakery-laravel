@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ProjectController;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
@@ -53,4 +54,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
 
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('favorites',FavoriteController::class);
+});
+
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
+    Route::apiResource('projects',ProjectController::class);
 });

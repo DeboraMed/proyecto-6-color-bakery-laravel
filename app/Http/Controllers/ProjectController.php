@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
-class FavoriteController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class FavoriteController extends Controller
     {
         //
         $user = auth()->user();
-        $favorites = $user->favorites()->with('color')->get();
+        $projects = $user->projects()->with('palettes.colors')->get();
 
-        return response()->json(['favorites' => $favorites], 200);
+        return response()->json(['projects' => $projects], 200);
     }
 
     /**
@@ -38,7 +38,7 @@ class FavoriteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Favorite $favorite)
+    public function show(Project $project)
     {
         //
     }
@@ -46,7 +46,7 @@ class FavoriteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Favorite $favorite)
+    public function edit(Project $project)
     {
         //
     }
@@ -54,7 +54,7 @@ class FavoriteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Favorite $favorite)
+    public function update(Request $request, Project $project)
     {
         //
     }
@@ -62,7 +62,7 @@ class FavoriteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Favorite $favorite)
+    public function destroy(Project $project)
     {
         //
     }
