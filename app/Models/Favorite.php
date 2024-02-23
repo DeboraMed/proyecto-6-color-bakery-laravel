@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Favorite extends Model
 {
@@ -20,8 +19,8 @@ class Favorite extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function color(): HasOne
+    public function color(): BelongsTo
     {
-        return $this->hasOne(Color::class);
+        return $this->belongsTo(Color::class);
     }
 }
