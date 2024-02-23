@@ -11,7 +11,8 @@ class Color extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'hex'
     ];
 
     public function favorites(): BelongsToMany

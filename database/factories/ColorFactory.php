@@ -18,6 +18,7 @@ class ColorFactory extends Factory
     {
         return [
             'name' => fake()->colorName(),
+            'hex' => fake()->hexColor()
         ];
     }
 }
