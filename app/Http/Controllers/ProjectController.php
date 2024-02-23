@@ -40,7 +40,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $user = auth()->user();
+        $user_project = $user->projects()->findOrFail($project->id); // Obtener el proyecto específico del usuario
+
+        return response()->json(['project' => $user_project], 200);
     }
 
     /**
