@@ -20,19 +20,22 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $project = auth()->user()->projects()->create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return response()->json(['project' => $project], 201);
     }
 
     /**
@@ -44,14 +47,6 @@ class ProjectController extends Controller
         $user_project = $user->projects()->findOrFail($project->id); // Obtener el proyecto específico del usuario
 
         return response()->json(['project' => $user_project], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Project $project)
-    {
-        //
     }
 
     /**
