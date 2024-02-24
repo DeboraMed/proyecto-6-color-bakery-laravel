@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\PaletteController;
 use App\Http\Controllers\ProjectController;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
@@ -56,4 +57,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('favorites',FavoriteController::class);
     Route::apiResource('projects',ProjectController::class);
+    Route::apiResource('palettes',PaletteController::class);
 });
