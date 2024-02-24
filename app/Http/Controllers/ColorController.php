@@ -64,4 +64,9 @@ class ColorController extends Controller
     {
         //
     }
+
+    public function findhex($hex)
+    {
+        return Color::nameByHex($hex);
+    }
 }

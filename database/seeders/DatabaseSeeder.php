@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Crea una base de datos inicial con 256 colores
-        Color::factory(256)->create();
+        Color::factory(100)->create();
 
         // Crea 10 usuarios donde cada uno tiene 5 proyectos y 10 paletas para cada uno
         User::factory(10)->has(Project::factory(5)->hasPalettes(10))

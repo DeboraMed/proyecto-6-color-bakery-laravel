@@ -17,8 +17,9 @@ class ColorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->colorName(),
-            'hex' => fake()->hexColor()
+            'hex' => substr(fake()->hexColor(),1)
+            //'name' => fake()->colorName()
+            // El nombre lo obtendremos accediendo a una API externa
         ];
     }
 }

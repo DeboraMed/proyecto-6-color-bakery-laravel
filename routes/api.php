@@ -50,12 +50,10 @@ Route::get('/user',[ApiController::class, 'user']);
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
    Route::apiResource('colors',ColorController::class);
+   Route::get('color/{hex}',[ColorController::class, 'findhex']);
 });
 
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('favorites',FavoriteController::class);
-});
-
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('projects',ProjectController::class);
 });
