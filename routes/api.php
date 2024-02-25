@@ -133,12 +133,37 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
 
     // Recursos de 'paletas'
 
+    /* Obtener las paletas del usuario activo
+    GET: localhost:8000/api/v1/palettes
+    */
+
     /* Crear una paleta, asociada a un proyecto especifico
     POST: localhost:8000/api/v1/palettes
     Payload:
     {
-        "name": "Mi Nueva Paleta",
-        "project_id": 52
+        "name": "Mi Paleta de Prueba",
+        "project_id": 1,
+        "colors": [
+            {"hex": "000000"},
+            {"hex": "444444"},
+            {"hex": "888888"},
+            {"hex": "BBBBBB"},
+            {"hex": "FFFFFF"}
+        ]
+    }
+
+    /* Mostrar una paleta del usuario activo
+    GET: localhost:8000/api/v1/palettes/32
+
+    /* Borrar una paleta del usuario activo
+    DELETE: localhost:8000/api/v1/palettes/3
+    */
+
+    /* Edita una paleta del usuario activo
+    PUT/PATCH: localhost:8000/api/v1/palettes/8
+    Payload:
+    {
+        "name": "Mi nuevo Nombre de Paleta",
     }
     */
     Route::apiResource('palettes', PaletteController::class);
