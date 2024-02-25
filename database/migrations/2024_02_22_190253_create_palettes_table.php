@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('palettes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('project_id');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

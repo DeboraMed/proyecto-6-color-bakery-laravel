@@ -79,7 +79,6 @@ class ProjectController extends Controller
         $user = auth()->user();
         $user_project = $user->projects()->findOrFail($project->id);
 
-        // TODO: Borrado en cascada?
         $user_project->delete();
 
         return response()->json(['message' => 'Proyecto eliminado con éxito'], 200);

@@ -41,7 +41,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
     Payload:
     {
         "email": "user@test.com",
-        "password": "test_passwrd"
+        "password": "test_password"
     }
     */
     Route::post('login', [AuthController::class, 'login']);

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Crea una base de datos inicial con 256 colores
+        // Crea una base de datos inicial con 100 colores
         Color::factory(100)->create();
 
         // Crea 10 usuarios donde cada uno tiene 5 proyectos y 10 paletas para cada uno
