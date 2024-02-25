@@ -12,15 +12,8 @@ use function Laravel\Prompts\password;
 
 //use Illuminate\Validation\Rules;
 
-class ApiController extends Controller
+class AuthController extends Controller
 {
-    public function users(Request $request)
-    {   // devuelve el listado completo de usuarios
-        $users = User::all();
-        // los devuelve en json
-        return response()->json($users);
-    }
-
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -34,7 +27,7 @@ class ApiController extends Controller
         }
     }
 
-    public function currentUser(Request $request)
+    public function user(Request $request)
     {
         return $request->user();
     }
@@ -45,7 +38,7 @@ class ApiController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
-    public function registry(Request $request)
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
