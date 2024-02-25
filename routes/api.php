@@ -72,6 +72,15 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     /* Obtener listado de favoritos del usuario activo
     GET: localhost:8000/api/v1/favorites
     */
+
+    /* Crear un nuevo favorito, asociado a un codigo hex de color
+    POST: localhost:8000/api/v1/favorites
+    Payload:
+    {
+        "name": "Mi nuevo Color Favorito",
+        "color_hex": "ffca45"
+    }
+    */
     Route::apiResource('favorites', FavoriteController::class);
 
     // Recursos de 'proyectos'

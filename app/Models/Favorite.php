@@ -11,7 +11,8 @@ class Favorite extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'color_id'
     ];
 
     public function user(): BelongsTo

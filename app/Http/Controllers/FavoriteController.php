@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,21 @@ class FavoriteController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'color_hex' => 'required|string|max:6',
+        ]);
+
+        $color = Color::firstOrCreate(
+            ['hex' =>  request('color_hex')]
+        );
+
+        $favorite = auth()->user()->favorites()->create([
+            'name' => $request->name,
+            'color_id' => $color->id
+        ]);
+
+        return response()->json(['favorite' => $favorite], 201);
     }
 
     /**

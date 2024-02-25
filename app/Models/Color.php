@@ -33,6 +33,7 @@ class Color extends Model
         parent::boot();
 
         static::creating(function ($color) {
+            $color->hex = strtoupper($color->hex);
             $color->name = self::nameByHex($color->hex);
         });
     }
