@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function () {
 
     /* Registra un nuevo usuario.
-    POST: localhost:8000/api/v1/register
+    POST: /api/v1/register
     Payload:
     {
         "name": "Nombre Usuario",
@@ -37,7 +37,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
     Route::post('register', [AuthController::class, 'register']);
 
     /* Accede al sistema y devuelve un token.
-    POST: localhost:8000/api/v1/login
+    POST: /api/v1/login
     Payload:
     {
         "email": "user@test.com",
@@ -45,11 +45,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
     }
     */
     Route::post('login', [AuthController::class, 'login']);
-
-    /* Metodo auxiliar. Obtiene el nombre de un color dado su codigo HEX.
-    GET: localhost:8000/api/v1/color/fa3232
-    */
-    Route::get('color/{hex}', [ColorController::class, 'findhex']);
 });
 
 // Metodos que requieren autenticacion via token.
@@ -58,23 +53,23 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function () {
 
     /* Devuelve el usuario activo actual
-    GET: localhost:8000/api/v1/user
+    GET: /api/v1/user
     */
     Route::get('user', [AuthController::class, 'user']);
 
     /* Anula el token activo, terminando la sesion del usuario.
-    GET: localhost:8000/api/v1/logout
+    GET: /api/v1/logout
     */
     Route::get('logout', [AuthController::class, 'logout']);
 
     // Recursos de 'favoritos'
 
     /* Obtener listado de favoritos del usuario activo
-    GET: localhost:8000/api/v1/favorites
+    GET: /api/v1/favorites
     */
 
     /* Crear un nuevo favorito, asociado a un codigo hex de color
-    POST: localhost:8000/api/v1/favorites
+    POST: /api/v1/favorites
     Payload:
     {
         "name": "Mi nuevo Color Favorito",
@@ -83,15 +78,15 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     */
 
     /* Mostrar un favorito del usuario activo
-    GET: localhost:8000/api/v1/favorites/109
+    GET: /api/v1/favorites/109
     */
 
     /* Borrar un favorito del usuario activo
-    DELETE: localhost:8000/api/v1/favorites/31
+    DELETE: /api/v1/favorites/31
     */
 
     /* Edita un favorito del usuario activo
-    PUT/PATCH: localhost:8000/api/v1/favorites/8
+    PUT/PATCH: /api/v1/favorites/8
     Payload:
     {
         "name": "Nuevo nombre de Color Favorito"
@@ -102,11 +97,11 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     // Recursos de 'proyectos'
 
     /* Obtener los proyectos del usuario activo
-    GET: localhost:8000/api/v1/projects
+    GET: /api/v1/projects
     */
 
     /* Crear un proyecto, asociado al usuario activo
-    POST: localhost:8000/api/v1/projects
+    POST: /api/v1/projects
     Payload:
     {
         "name": "Nombre del Proyecto",
@@ -115,14 +110,14 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     */
 
     /* Mostrar un proyecto del usuario activo
-    GET: localhost:8000/api/v1/projects/32
+    GET: /api/v1/projects/32
 
     /* Borrar un proyecto del usuario activo
-    DELETE: localhost:8000/api/v1/projects/3
+    DELETE: /api/v1/projects/3
     */
 
     /* Edita un proyecto del usuario activo
-    PUT/PATCH: localhost:8000/api/v1/projects/8
+    PUT/PATCH: /api/v1/projects/8
     Payload:
     {
         "name": "Mi nuevo Nombre de Proyecto",
@@ -134,11 +129,11 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     // Recursos de 'paletas'
 
     /* Obtener las paletas del usuario activo
-    GET: localhost:8000/api/v1/palettes
+    GET: /api/v1/palettes
     */
 
     /* Crear una paleta, asociada a un proyecto especifico
-    POST: localhost:8000/api/v1/palettes
+    POST: /api/v1/palettes
     Payload:
     {
         "name": "Mi Paleta de Prueba",
@@ -153,14 +148,14 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     }
 
     /* Mostrar una paleta del usuario activo
-    GET: localhost:8000/api/v1/palettes/32
+    GET: /api/v1/palettes/32
 
     /* Borrar una paleta del usuario activo
-    DELETE: localhost:8000/api/v1/palettes/3
+    DELETE: /api/v1/palettes/3
     */
 
     /* Edita una paleta del usuario activo
-    PUT/PATCH: localhost:8000/api/v1/palettes/8
+    PUT/PATCH: /api/v1/palettes/8
     Payload:
     {
         "name": "Mi nuevo Nombre de Paleta",
@@ -168,8 +163,8 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     */
     Route::apiResource('palettes', PaletteController::class);
 
-    /* Recursos de 'colores'
-    GET: localhost:8000/api/v1/favorites
+    /* Metodo auxiliar. Obtiene el nombre de un color dado su codigo HEX.
+    GET: /api/v1/colors/fa3232
     */
     Route::apiResource('colors', ColorController::class);
 });
