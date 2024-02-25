@@ -44,7 +44,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $user = auth()->user();
-        $user_project = $user->projects()->findOrFail($project->id); // Obtener el proyecto específico del usuario
+        $user_project = $user->projects()->with('palettes.colors')->findOrFail($project->id); // Obtener el proyecto específico del usuario
 
         return response()->json(['project' => $user_project], 200);
     }
@@ -55,6 +55,20 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         //
+        $user = auth()->user();
+        $user_project = $user->projects()->findOrFail($project->id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255'
+        ]);
+
+        $user_project->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return response()->json(['project' => $user_project], 200);
     }
 
     /**
@@ -62,6 +76,12 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $user = auth()->user();
+        $user_project = $user->projects()->findOrFail($project->id);
+
+        // TODO: Borrado en cascada?
+        $user_project->delete();
+
+        return response()->json(['message' => 'Proyecto eliminado con éxito'], 200);
     }
 }

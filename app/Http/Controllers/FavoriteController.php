@@ -50,7 +50,7 @@ class FavoriteController extends Controller
     {
         //
         $user = auth()->user();
-        $user_favorite = $user->favorites()->findOrFail($favorite->id); // Obtener el proyecto específico del usuario
+        $user_favorite = $user->favorites()->with('color')->findOrFail($favorite->id); // Obtener el proyecto específico del usuario
 
         return response()->json(['favorite' => $user_favorite], 200);
     }

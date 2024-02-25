@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     DELETE: localhost:8000/api/v1/favorites/31
     */
 
-    /* Edita un nuevo favorito del usuario activo
+    /* Edita un favorito del usuario activo
     PUT/PATCH: localhost:8000/api/v1/favorites/8
     Payload:
     {
@@ -116,6 +116,18 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
 
     /* Mostrar un proyecto del usuario activo
     GET: localhost:8000/api/v1/projects/32
+
+    /* Borrar un proyecto del usuario activo
+    DELETE: localhost:8000/api/v1/projects/3
+    */
+
+    /* Edita un proyecto del usuario activo
+    PUT/PATCH: localhost:8000/api/v1/projects/8
+    Payload:
+    {
+        "name": "Mi nuevo Nombre de Proyecto",
+        "description": "Mi nueva descripcion de proyecto"
+    }
     */
     Route::apiResource('projects', ProjectController::class);
 
