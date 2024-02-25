@@ -49,6 +49,10 @@ class FavoriteController extends Controller
     public function show(Favorite $favorite)
     {
         //
+        $user = auth()->user();
+        $user_favorite = $user->favorites()->findOrFail($favorite->id); // Obtener el proyecto específico del usuario
+
+        return response()->json(['favorite' => $user_favorite], 200);
     }
 
     /**
@@ -57,6 +61,18 @@ class FavoriteController extends Controller
     public function update(Request $request, Favorite $favorite)
     {
         //
+        $user = auth()->user();
+        $user_favorite = $user->favorites()->findOrFail($favorite->id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $user_favorite->update([
+            'name' => $request->name,
+        ]);
+
+        return response()->json(['favorite' => $user_favorite], 200);
     }
 
     /**
@@ -64,6 +80,11 @@ class FavoriteController extends Controller
      */
     public function destroy(Favorite $favorite)
     {
-        //
+        $user = auth()->user();
+        $user_favorite = $user->favorites()->findOrFail($favorite->id);
+
+        $user_favorite->delete();
+
+        return response()->json(['message' => 'Favorito eliminado con éxito'], 200);
     }
 }

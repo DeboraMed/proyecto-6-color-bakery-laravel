@@ -81,6 +81,22 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
         "color_hex": "ffca45"
     }
     */
+
+    /* Mostrar un favorito del usuario activo
+    GET: localhost:8000/api/v1/favorites/109
+    */
+
+    /* Borrar un favorito del usuario activo
+    DELETE: localhost:8000/api/v1/favorites/31
+    */
+
+    /* Edita un nuevo favorito del usuario activo
+    PUT/PATCH: localhost:8000/api/v1/favorites/8
+    Payload:
+    {
+        "name": "Nuevo nombre de Color Favorito"
+    }
+    */
     Route::apiResource('favorites', FavoriteController::class);
 
     // Recursos de 'proyectos'
