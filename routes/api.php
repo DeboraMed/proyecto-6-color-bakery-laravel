@@ -4,6 +4,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\PaletteController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
@@ -20,42 +21,93 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*ruta que ya te viene generada*/
+// Metodos que no requieren autenticacion
 
-// === AUTH ===
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function () {
 
-// Crea un nuevo registro de usuario
-Route::post('/user/registry',[ApiController::class, 'registry']);
+    /* Registra un nuevo usuario.
+    POST: localhost:8000/api/v1/register
+    Payload:
+    {
+        "name": "Nombre Usuario",
+        "email": "nuevo@usuario.com",
+        "password": "mi_contraseña_segura"
+    }
+    */
+    Route::post('register', [AuthController::class, 'register']);
 
-// Login: Requiere 'email' y 'password'
-Route::post('/user/login',[ApiController::class, 'login']);
+    /* Accede al sistema y devuelve un token.
+    POST: localhost:8000/api/v1/login
+    Payload:
+    {
+        "email": "user@test.com",
+        "password": "test_passwrd"
+    }
+    */
+    Route::post('login', [AuthController::class, 'login']);
 
-// Devuelve el usuario activo dado un token
-Route::middleware('auth:sanctum')->get('/user/current',[ApiController::class, 'currentUser']);
-
-// Devuelve el usuario activo dado un token
-Route::middleware('auth:sanctum')->get('/user/logout',[ApiController::class, 'logout']);
-
-
-
-// === CRUD DE USUARIO ===
-
-// devuelve todos los usuarios
-Route::get('/users',[ApiController::class, 'users']);
-
-// devuelve un usuario
-Route::get('/user',[ApiController::class, 'user']);
-
-
-// === CRUD DE COLORES (TODO: Incluir validacion por token) ===
-
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
-   Route::apiResource('colors',ColorController::class);
-   Route::get('color/{hex}',[ColorController::class, 'findhex']);
+    /* Metodo auxiliar. Obtiene el nombre de un color dado su codigo HEX.
+    GET: localhost:8000/api/v1/color/fa3232
+    */
+    Route::get('color/{hex}', [ColorController::class, 'findhex']);
 });
 
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function() {
-    Route::apiResource('favorites',FavoriteController::class);
-    Route::apiResource('projects',ProjectController::class);
-    Route::apiResource('palettes',PaletteController::class);
+// Metodos que requieren autenticacion via token.
+// headers: { Authorization: `Bearer 9|oDYcViwIo5KjRpG8BWLfL6kQmiXMtwRI3hTN9Z8B5371571d` }
+
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function () {
+
+    /* Devuelve el usuario activo actual
+    GET: localhost:8000/api/v1/user
+    */
+    Route::get('user', [AuthController::class, 'user']);
+
+    /* Anula el token activo, terminando la sesion del usuario.
+    GET: localhost:8000/api/v1/logout
+    */
+    Route::get('logout', [AuthController::class, 'logout']);
+
+    // Recursos de 'favoritos'
+
+    /* Obtener listado de favoritos del usuario activo
+    GET: localhost:8000/api/v1/favorites
+    */
+    Route::apiResource('favorites', FavoriteController::class);
+
+    // Recursos de 'proyectos'
+
+    /* Obtener los proyectos del usuario activo
+    GET: localhost:8000/api/v1/projects
+    */
+
+    /* Crear un proyecto, asociado al usuario activo
+    POST: localhost:8000/api/v1/projects
+    Payload:
+    {
+        "name": "Nombre del Proyecto",
+        "description": "Descripcion del Proyecto"
+    }
+    */
+
+    /* Mostrar un proyecto del usuario activo
+    GET: localhost:8000/api/v1/projects/32
+    */
+    Route::apiResource('projects', ProjectController::class);
+
+    // Recursos de 'paletas'
+
+    /* Crear una paleta, asociada a un proyecto especifico
+    POST: localhost:8000/api/v1/palettes
+    Payload:
+    {
+        "name": "Mi Nueva Paleta",
+        "project_id": 52
+    }
+    */
+    Route::apiResource('palettes', PaletteController::class);
+
+    /* Recursos de 'colores'
+    GET: localhost:8000/api/v1/favorites
+    */
+    Route::apiResource('colors', ColorController::class);
 });
