@@ -13,4 +13,13 @@ class ColorController extends Controller
     {
         return Color::nameByHex($hex);
     }
+
+    public function random()
+    {
+        $color = Color::firstOrCreate(
+            ['hex' => substr(fake()->hexColor(),1)]
+        );
+
+        return $color;
+    }
 }

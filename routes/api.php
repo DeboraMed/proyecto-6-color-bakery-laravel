@@ -45,6 +45,16 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function
     }
     */
     Route::post('login', [AuthController::class, 'login']);
+
+    /* Metodo auxiliar. Genera un color aleatorio.
+    GET: /api/v1/colors/random
+    */
+    Route::get('colors/random', [ColorController::class, 'random']);
+
+    /* Metodo auxiliar. Obtiene el nombre de un color dado su codigo HEX.
+    GET: /api/v1/colors/fa3232
+    */
+    Route::apiResource('colors', ColorController::class);
 });
 
 // Metodos que requieren autenticacion via token.
@@ -162,9 +172,4 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1', 'namespace' =>
     }
     */
     Route::apiResource('palettes', PaletteController::class);
-
-    /* Metodo auxiliar. Obtiene el nombre de un color dado su codigo HEX.
-    GET: /api/v1/colors/fa3232
-    */
-    Route::apiResource('colors', ColorController::class);
 });
