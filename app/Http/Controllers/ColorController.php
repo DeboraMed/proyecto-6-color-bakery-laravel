@@ -16,10 +16,6 @@ class ColorController extends Controller
 
     public function random()
     {
-        $color = Color::firstOrCreate(
-            ['hex' => substr(fake()->hexColor(),1)]
-        );
-
-        return $color;
+        return substr(fake()->hexColor(),1);
     }
 }
